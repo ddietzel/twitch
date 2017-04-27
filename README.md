@@ -1,2 +1,2 @@
 # twitch
-<a href="alpha.danieldietzel.com/twitch/">See it live</a>
+<a href="http://alpha.danieldietzel.com/twitch/">See it live</a>
