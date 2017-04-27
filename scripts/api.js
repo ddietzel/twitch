@@ -1,33 +1,24 @@
 // The main meat of the app, this thing searches twitch for you
-function twitchApiCall(searchTerms, fullQuery, newSearch) {
-  return new Promise(function(resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    var query;
+function loadTwitchQuery(searchTerms, fullQuery, newSearch) {
+  clearResults();
+  showLoader();
+  isItLoaded(false);
 
-    if(fullQuery) {
-      query = fullQuery
-    } else {
-      query = 'https://api.twitch.tv/kraken/search/streams?q='+ searchTerms;
-    }
+  var query;
 
-    if(newSearch) {
-      config.page = 1;
-    }
+  if(fullQuery) {
+    query = fullQuery
+  } else {
+    query = 'https://api.twitch.tv/kraken/search/streams?q='+ searchTerms;
+  }
 
-    var url = query+'&client_id='+config.clientId;
-    xhr.open('GET', url);
-    xhr.send(null);
-
-    xhr.onreadystatechange = function () {
-      if(xhr.readyState === XMLHttpRequest.DONE) {
-        if(xhr.status === 200) {
-          resolve(JSON.parse(xhr.responseText));
-        } else {
-          reject('Error: ' + xhr.status);
-        }
-      }
-    };
-  });
+  if(newSearch) {
+    config.page = 1;
+  }
+  var url = query+'&client_id='+config.clientId+'&callback=finishTwitchApiCall';
+  var scriptEl = document.createElement('script');
+  scriptEl.setAttribute('src', url);
+  document.body.appendChild(scriptEl);
 }
 
 // Called on form submit in the DOM

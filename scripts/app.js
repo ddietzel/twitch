@@ -18,21 +18,13 @@ function init() {
   isItLoaded(false);
 }
 
-function loadTwitchQuery(searchTerms, fullQuery, newSearch) {
-  clearResults();
-  showLoader();
-  isItLoaded(false);
-
-  twitchApiCall(searchTerms, fullQuery, newSearch).then(function(res) {
-    config.result = res;
-    isItLoaded(true);
-    hideLoader();
-    renderPagination(res._total);
-    setResultsCount(res._total);
-    appendSearchResults(res);
-  }).catch(function(error) {
-    console.log('rejected', error);
-  });
+function finishTwitchApiCall(res) {
+  config.result = res;
+  isItLoaded(true);
+  hideLoader();
+  renderPagination(res._total);
+  setResultsCount(res._total);
+  appendSearchResults(res);
 }
 
 // Set the listeners for the arrow keys
